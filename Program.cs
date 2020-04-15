@@ -161,8 +161,10 @@ namespace COED_2
 
 
             output.Write($"Приближённая ширина интервала:\n");
-            double deltaX=GetDeltaX(ar[0],ar[ar.Length-1],ar.Length);
+            double deltaX=Math.Round(GetDeltaX(ar[0],ar[ar.Length-1],ar.Length));
             output.Write(deltaX.ToString());
+
+            
             }
         }
     }
