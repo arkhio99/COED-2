@@ -146,7 +146,7 @@ namespace COED_2
             output.Write($"Длина массива={ar.Length}\n\n\n");
 
 
-            output.Write($"Отсортируем его:\n");
+            output.Write("Отсортируем его:\n");
             var list=ar.ToList<double>();
             list.Sort();
             ar=list.ToArray<double>();
@@ -154,16 +154,54 @@ namespace COED_2
             output.Write($"Длина массива={ar.Length}\n\n\n");
 
 
-            output.Write($"Удалим спорные члены:\n");
+            output.Write("Удалим спорные члены:\n");
             ar=DeleteСontroversialMembers(ar);
             output.Write(print(ar));
             output.Write($"Длина массива={ar.Length}\n\n\n");
 
 
-            output.Write($"Приближённая ширина интервала:\n");
+            output.Write("Приближённая ширина интервала=");
             double deltaX=Math.Round(GetDeltaX(ar[0],ar[ar.Length-1],ar.Length));
             output.Write(deltaX.ToString());
+            output.Write("\n\n\n");
 
+
+            double xMaxShtrih=ar[ar.Length-1]+0.15*deltaX;
+            output.Write("xMaxShtrih="+xMaxShtrih.ToString()+"\n");
+
+            double xMinShtrih=ar[0]-0.15*deltaX;
+            output.Write("xMinShtrih="+xMinShtrih.ToString()+"\n");
+
+            double k=Math.Round((xMaxShtrih-xMinShtrih)/deltaX);
+            output.Write("Число интервалов="+k.ToString()+"\n");
+
+            int lOfLastInterval;
+            int l=0;
+            var listOfCi=new List<int>();
+            while(true)
+            {          
+                lOfLastInterval=l;      
+                int r=l;
+                while(ar[r]-ar[l]<deltaX)
+                {
+                    if(r==ar.Length-1)
+                        break;
+                    r++;
+                }
+                if(r==ar.Length-1)
+                    break;
+                listOfCi.Add(r);
+                l=r+1;
+            }
+            if(xMaxShtrih-ar[lOfLastInterval]>deltaX)
+            {
+                output.Write("xMaxShtrih не входит в последний интервал. Приравняем его к границе\n");
+                xMaxShtrih=ar[lOfLastInterval];
+                output.Write("xMaxShtrih="+xMaxShtrih.ToString()+"\n");
+                k=Math.Round((xMaxShtrih-xMinShtrih)/deltaX);
+                output.Write("Число интервалов="+k.ToString()+"\n\n\n");
+            }
+            
             
             }
         }
