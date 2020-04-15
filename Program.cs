@@ -21,12 +21,14 @@ namespace COED_2
             }
             return ar;
         }
-        static void print(double[] col)
+        static string print(double[] col)
         {
+            string s="";
             foreach(var val in col)
             {
-                System.Console.WriteLine(val);
+                s+=val.ToString()+"\n";
             }
+            return s;
         }
         static double GetLinAvg(double[] ar, int left, int right)
         {
@@ -128,24 +130,40 @@ namespace COED_2
             }
             return list.ToArray();            
         }
+        static double GetDeltaX(double xMin, double xMax, double len)
+        {
+            return (xMax-xMin)/(1+3.31*Math.Log10(len));
+        }
         static void Main(string[] args)
         {
-            System.Console.WriteLine("Наш массив данных:");
+            //File.Create(pathToTheOutput);
+            File.Delete(pathToTheOutput);
+            using(StreamWriter output=new StreamWriter(pathToTheOutput,true))
+            {
+            output.Write("Наш массив данных:\n");
             var ar=ExcelToAr();
-            print(ar);
-            
+            output.Write(print(ar));
+            output.Write($"Длина массива={ar.Length}\n\n\n");
 
-            System.Console.WriteLine($"Длина массива={ar.Length}\n\n\nОтсортируем его:");
+
+            output.Write($"Отсортируем его:\n");
             var list=ar.ToList<double>();
             list.Sort();
             ar=list.ToArray<double>();
-            print(ar);
+            output.Write(print(ar));
+            output.Write($"Длина массива={ar.Length}\n\n\n");
 
-            System.Console.WriteLine($"Длина массива={ar.Length}\n\n\nУдалим спорные члены:");
+
+            output.Write($"Удалим спорные члены:\n");
             ar=DeleteСontroversialMembers(ar);
-            print(ar);
+            output.Write(print(ar));
+            output.Write($"Длина массива={ar.Length}\n\n\n");
 
-            System.Console.WriteLine($"Длина массива={ar.Length}\n\n\nУдалим спорные члены:");
+
+            output.Write($"Приближённая ширина интервала:\n");
+            double deltaX=GetDeltaX(ar[0],ar[ar.Length-1],ar.Length);
+            output.Write(deltaX.ToString());
+            }
         }
     }
 }
