@@ -1,0 +1,11 @@
+F:\Git\COED-2\obj\Debug\netcoreapp3.1\COED-2.csprojAssemblyReference.cache
+F:\Git\COED-2\obj\Debug\netcoreapp3.1\COED-2.AssemblyInfoInputs.cache
+F:\Git\COED-2\obj\Debug\netcoreapp3.1\COED-2.AssemblyInfo.cs
+F:\Git\COED-2\bin\Debug\netcoreapp3.1\COED-2.exe
+F:\Git\COED-2\bin\Debug\netcoreapp3.1\COED-2.deps.json
+F:\Git\COED-2\bin\Debug\netcoreapp3.1\COED-2.runtimeconfig.json
+F:\Git\COED-2\bin\Debug\netcoreapp3.1\COED-2.runtimeconfig.dev.json
+F:\Git\COED-2\bin\Debug\netcoreapp3.1\COED-2.dll
+F:\Git\COED-2\bin\Debug\netcoreapp3.1\COED-2.pdb
+F:\Git\COED-2\obj\Debug\netcoreapp3.1\COED-2.dll
+F:\Git\COED-2\obj\Debug\netcoreapp3.1\COED-2.pdb

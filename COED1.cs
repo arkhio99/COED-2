@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-namespace COED_2
+
+namespace проект
 {
     class Program
     {
@@ -142,7 +143,7 @@ namespace COED_2
                 System.Console.WriteLine();
             }
         }
-        static void Main(string[] args)
+        static void Main1(string[] args)
         {
             double[,] data = ExcelToAr();
             //1а средние по столбцам и оценки дисперсий
