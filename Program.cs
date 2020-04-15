@@ -1,164 +1,151 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 namespace COED_2
 {
     class Program
     {
-        static double[,] ExcelToAr()
+        static string pathToTheOutput=@"F:\Git\COED-2\out.txt";
+        static string pathToTheInput = @"F:\Git\COED-2\values.txt";
+        static double[] ExcelToAr()
         {
-            string path = @"F:\Git\COED-2\values.txt";
-            string[] strings = File.ReadAllLines(path);
-            double[,] ar = new double[strings.Length,10];
+            
+            string[] strings = File.ReadAllLines(pathToTheInput);
+            double[] ar = new double[strings.Length];
             for(int i=0;i<strings.Length;i++)
             {
                 string[] temp = strings[i].Split('\t');
-                for (int j = 0; j < 10; j++)
-                    ar[i, j] = double.Parse(temp[j]);
+                ar[i]=Convert.ToDouble(temp[0]);
             }
             return ar;
         }
-        static double GetAvg(double[,] ar, int col)
+        static void print(double[] col)
         {
-            int how=ar.GetLength(0);
-            double result=0;
-            for(int i=0;i<how;i++)
-                result+=ar[i,col];
-            result/=how;
-            return result;
+            foreach(var val in col)
+            {
+                System.Console.WriteLine(val);
+            }
         }
-        static double[] GetRowOfAvg(double[,] ar)
+        static double GetLinAvg(double[] ar, int left, int right)
         {
-            int how=ar.GetLength(1);
-            double[] m=new double[how];
-            for(int i=0;i<how;i++)
-                m[i]=GetAvg(ar,i);
-            return m;
+            int n=right-left+1;
+            double res=0;
+            for(int i=left+1;i<=right;i++)
+            {
+                res+=ar[i];
+            }
+            return res/(right+1-left-1);
         }
-        static double GradeOfDispersion(double[,] ar,double[] avgs,int col)
+
+        static double GetGeomAvg(double[] ar, int left, int right)
         {
-            int how=ar.GetLength(0);
-            double result=0;
-            for(int i=0;i<how; i++)
-                result+=(ar[i,col]-avgs[col])*(ar[i,col]-avgs[col]);
-            result/=how;
-            return result;
+            int n=right-left+1;
+            double res=0;
+            double linAvg=GetLinAvg(ar,left,right);
+
+            for(int i=left+1;i<=right;i++)
+            {
+                res+=(ar[i]-linAvg)*(ar[i]-linAvg);
+            }
+            if(n<=30)
+                res/=right+1-left-2;
+            else
+                res/=right+1-left-1;
+            return Math.Sqrt(res);
         }
-        static double[] GetArOfDisp(double[,] ar, double[] avgs)
+
+        static double GetTTheor(int left, int right)
         {
-            int how=ar.GetLength(1);
-            double[] m=new double[how];
-            for(int i=0;i<how;i++)
-                m[i]=GradeOfDispersion(ar,avgs,i);
-            return m;
+            double tTheor;
+            int l=right-left+1;
+            if(l<=5)
+                tTheor=3.04;
+            else if (l<=10)
+                tTheor=2.37;
+            else if (l<=15)
+                tTheor=2.22;
+            else if (l<=20)
+                tTheor=2.14;
+            else if (l<=24)
+                tTheor=2.11;
+            else if (l<=28)
+                tTheor=2.09;
+            else if (l<=30)
+                tTheor=2.08;
+            else if (l<=40)
+                tTheor=2.04;
+            else if (l<=60)
+                tTheor=2.02;
+            else if (l<=120)
+                tTheor=1.99;
+            else tTheor=1.96;
+            return tTheor;
         }
-        static double[,] GetStandMatrix(double[,] z, double[] avgs, double[] s)
+        static double GetTCalc(double[] ar,int left, int right, int lOrR)
         {
-            int N=z.GetLength(0);
-            int p=z.GetLength(1);
-            double[,] res=new double[N,p];
-            for(int i=0;i<N;i++)
-                for(int j=0;j<p;j++)
-                    res[i,j]=(z[i,j]-avgs[j])/Math.Sqrt(s[j]);
-            return res;
+            return Math.Abs(GetLinAvg(ar,left,right)-ar[lOrR==0?left:right])/GetGeomAvg(ar,left,right);
         }
-        static double[,] GetCovMatrix(double[,] z,double[] avgs)
+        static double[] DeleteСontroversialMembers(double[] ar)
         {
-            int p=z.GetLength(1);
-            int N=z.GetLength(0);
-            double[,] res=new double[p,p];
-            for(int i=0;i<p;i++)
-                for(int j=0;j<p;j++)
-                    {
-                        double temp=0;
-                        for(int k=0;k<N;k++)
-                            temp+=(z[k,i]-avgs[i])/(z[k,j]-avgs[j]);
-                        res[i,j]=temp/N;
-                    }  
-            return res;
-        }
-        static double[,] GetCorrMatrix(double[,] x)
-        {
-            int N=x.GetLength(0);
-            int p=x.GetLength(1);
-            double[,] res=new double[p,p];
-            for(int i=0;i<p;i++)
-                for(int j=0;j<p;j++)
+            bool lStop=false;
+            bool rStop=false;//l - если слева не удаляются символы - true, r - аналогично
+            int leftContr=0;
+            int rightContr=ar.Length-1;
+            int lOrR=0;
+            while(true){
+                double tCalc=GetTCalc(ar,leftContr,rightContr, lOrR);
+                double tTheor=GetTTheor(leftContr,rightContr);
+                if(lOrR==0)
                 {
-                    res[i,j]=0;
-                    for(int k=0;k<N;k++)
-                        res[i,j]+=x[k,i]*x[k,j];
-                    res[i,j]/=N;
+                    if(tCalc>tTheor)
+                    {
+                        leftContr++;
+                    }
+                    else{
+                        lOrR=1;
+                        lStop=true;
+                    }
                 }
-            return res;
-        }
-        static void printMas(double[,] mas)
-        {
-            for(int i=0;i<mas.GetLength(0);i++)
-            {
-                for(int j=0;j<mas.GetLength(1);j++)
-                    System.Console.Write($"\t{mas[i,j]:f4}\t");
-                System.Console.WriteLine();
+                else{
+                    if(tCalc>tTheor)
+                    {
+                        rightContr--;
+                    }
+                    else{
+                        lOrR=0;
+                        rStop=true;
+                    }
+                }
+                if(lStop==rStop==true)
+                    break;
             }
-        }
-        static double GetChosenCorr(double[,] z,double[] avgs, int xCol, int yCol)
-        {
-            double first=0;
-            double second=0;
-            for(int i=0;i<z.GetLength(0);i++)
+            var list=new List<double>();
+            for(int i=leftContr;i<=rightContr;i++)
             {
-                double temp=(z[i,xCol]-avgs[xCol])*(z[i,yCol]-avgs[yCol]);
-                first+=temp;
-                second+=temp*temp;
+                list.Add(ar[i]);
             }
-            second=Math.Sqrt(second);
-            return first/second;
-        }
-        static double GetStat(double [,] z, double[] avgs,int xCol,int yCol)
-        {
-            double r=GetChosenCorr(z,avgs,xCol,yCol);
-            double n=z.GetLength(1);
-            return r*Math.Sqrt(n-2)/Math.Sqrt(1-r*r);
-        }
-        static double[,] GetStatTable(double[,] z,double[] avgs)
-        {
-            int p=z.GetLength(1);
-            double[,] res=new double[p,p];
-            for(int i=0;i<p;i++)
-                for(int j=0;j<p;j++)
-                    res[i,j]=GetStat(z,avgs,i,j);
-            return res;
-        }
-        static void printForStat(double[,] stat, double tableValue)
-        {
-            for(int i=0;i<stat.GetLength(0);i++)
-            {
-                for(int j=0;j<stat.GetLength(1);j++)
-                    if(Math.Abs(stat[i,j])>tableValue)
-                        System.Console.Write("H1 \t");
-                    else if(Math.Abs(stat[i,j])<tableValue)
-                        System.Console.Write("H0 \t");
-                    else 
-                        System.Console.Write("r \t");
-                System.Console.WriteLine();
-            }
+            return list.ToArray();            
         }
         static void Main(string[] args)
         {
-            double[,] data = ExcelToAr();
-            //1а средние по столбцам и оценки дисперсий
-            double[] arAvgs=GetRowOfAvg(data);
-            double[] arS2 = GetArOfDisp(data,arAvgs);
-            //1б стандартизованная матрица
-            double[,] X=GetStandMatrix(data,arAvgs,arS2);
-            //1в ковариационная матрица
-            double[,] covMatrix=GetCovMatrix(data,arAvgs);
-            //1г корреляционная матрица
-            double[,] R=GetCorrMatrix(X);
-            //2 Проверить гипотезу о значимости коэффициентов корреляции
-            // между столбцами матрицы данных.
-            double[,] t=GetStatTable(data,arAvgs);
-            double tableValue=1.9921022;
-            printForStat(t,tableValue);
+            System.Console.WriteLine("Наш массив данных:");
+            var ar=ExcelToAr();
+            print(ar);
+            
+
+            System.Console.WriteLine($"Длина массива={ar.Length}\n\n\nОтсортируем его:");
+            var list=ar.ToList<double>();
+            list.Sort();
+            ar=list.ToArray<double>();
+            print(ar);
+
+            System.Console.WriteLine($"Длина массива={ar.Length}\n\n\nУдалим спорные члены:");
+            ar=DeleteСontroversialMembers(ar);
+            print(ar);
+
+            System.Console.WriteLine($"Длина массива={ar.Length}\n\n\nУдалим спорные члены:");
         }
     }
 }
