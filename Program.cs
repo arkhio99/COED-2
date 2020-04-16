@@ -24,7 +24,7 @@ namespace COED_2
         static string print<T>(IEnumerable<T> col)
         {
             string s="";
-            foreach(var val in col)
+            foreach(T val in col)
             {
                 s+=" "+val.ToString()+"\n";
             }
@@ -145,7 +145,7 @@ namespace COED_2
             return Math.Round((xMax-xMin)/(1+3.31*Math.Log10(len)));
         }
 
-        /*static T[] GetSubArray<T>(T[] ar, int left, int n)
+        static T[] GetSubArray<T>(T[] ar, int left, int n)
         {
             T[] res=new T[n];
             for(int i=0;i<n;i++)
@@ -153,7 +153,7 @@ namespace COED_2
                 res[i]=ar[i+left];
             }
             return res;
-        }*/
+        }
         static double[] GetArOfni(int[] arOfCi,int n)
         {
             var res=new double[arOfCi.Length];
@@ -240,12 +240,22 @@ namespace COED_2
             int[] arOfCi=listOfCi.ToArray();
             output.Write(print(arOfCi));
 
+            output.Write("\n\n\nИнтервалы:\n");
+            var listOfIntervals=new List<double[]>();
+            listOfIntervals.Add(GetSubArray<double>(ar,0,arOfCi[0]+1));
+            for(int i=1;i<arOfCi.Length;i++)
+            {
+                listOfIntervals.Add(GetSubArray<double>(ar,arOfCi[i-1]+1,arOfCi[i]-arOfCi[i-1]));
+            }
+            var arOfIntervals=listOfIntervals.ToArray();
+            for(int i=0;i<arOfIntervals.Length;i++)
+            {
+                output.Write(i.ToString()+".\n"+print(arOfIntervals[i]));
+            }            
 
             output.Write("\n\n\nЧастоты интервалов:\n");
             double[] arOfni=GetArOfni(arOfCi,ar.Length);
-            for(int i=0;i<arOfni.Length;i++)
-                output.Write(" "+arOfni[i].ToString()+"\n");
-
+            output.Write(print(arOfni));
 
             }
         }
