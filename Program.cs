@@ -21,12 +21,12 @@ namespace COED_2
             }
             return ar;
         }
-        static string print(double[] col)
+        static string print<T>(IEnumerable<T> col)
         {
             string s="";
             foreach(var val in col)
             {
-                s+=val.ToString()+"\n";
+                s+=" "+val.ToString()+"\n";
             }
             return s;
         }
@@ -39,6 +39,16 @@ namespace COED_2
                 res+=ar[i];
             }
             return res/(right+1-left-1);
+        }
+        static double GetLinAvg(double[] ar)
+        {
+            int n=ar.Length;
+            double res=0;
+            for(int i=0;i<n;i++)
+            {
+                res+=ar[i];
+            }
+            return res/n;
         }
 
         static double GetGeomAvg(double[] ar, int left, int right)
@@ -132,7 +142,28 @@ namespace COED_2
         }
         static double GetDeltaX(double xMin, double xMax, double len)
         {
-            return (xMax-xMin)/(1+3.31*Math.Log10(len));
+            return Math.Round((xMax-xMin)/(1+3.31*Math.Log10(len)));
+        }
+
+        /*static T[] GetSubArray<T>(T[] ar, int left, int n)
+        {
+            T[] res=new T[n];
+            for(int i=0;i<n;i++)
+            {
+                res[i]=ar[i+left];
+            }
+            return res;
+        }*/
+        static double[] GetArOfni(int[] arOfCi,int n)
+        {
+            var res=new double[arOfCi.Length];
+            var intervals=new double[arOfCi[0]+1];
+            res[0]=((double)arOfCi[0]+1)/n;
+            for(int i=1;i<arOfCi.Length;i++)
+            {
+                res[i]=((double)(arOfCi[i]-arOfCi[i-1]))/n;
+            }
+            return res;
         }
         static void Main(string[] args)
         {
@@ -161,7 +192,7 @@ namespace COED_2
 
 
             output.Write("Приближённая ширина интервала=");
-            double deltaX=Math.Round(GetDeltaX(ar[0],ar[ar.Length-1],ar.Length));
+            double deltaX=GetDeltaX(ar[0],ar[ar.Length-1],ar.Length);
             output.Write(deltaX.ToString());
             output.Write("\n\n\n");
 
@@ -172,7 +203,7 @@ namespace COED_2
             double xMinShtrih=ar[0]-0.15*deltaX;
             output.Write("xMinShtrih="+xMinShtrih.ToString()+"\n");
 
-            double k=Math.Round((xMaxShtrih-xMinShtrih)/deltaX);
+            double k=Math.Floor((xMaxShtrih-xMinShtrih)/deltaX);
             output.Write("Число интервалов="+k.ToString()+"\n");
 
             int lOfLastInterval;
@@ -189,9 +220,12 @@ namespace COED_2
                     r++;
                 }
                 if(r==ar.Length-1)
-                    break;
+                    {
+                        listOfCi.Add(r);
+                        break;
+                    }
                 listOfCi.Add(r);
-                l=r+1;
+                l=r;
             }
             if(xMaxShtrih-ar[lOfLastInterval]>deltaX)
             {
@@ -201,8 +235,18 @@ namespace COED_2
                 k=Math.Round((xMaxShtrih-xMinShtrih)/deltaX);
                 output.Write("Число интервалов="+k.ToString()+"\n\n\n");
             }
-            
-            
+
+            output.Write("Правые границы интервалов:\n");
+            int[] arOfCi=listOfCi.ToArray();
+            output.Write(print(arOfCi));
+
+
+            output.Write("\n\n\nЧастоты интервалов:\n");
+            double[] arOfni=GetArOfni(arOfCi,ar.Length);
+            for(int i=0;i<arOfni.Length;i++)
+                output.Write(" "+arOfni[i].ToString()+"\n");
+
+
             }
         }
     }
