@@ -165,6 +165,65 @@ namespace COED_2
             }
             return res;
         }
+        
+        static double[] GetArOfmi(double[] arOfni,int n)
+        {
+            double[] res=new double[arOfni.Length];
+            for(int i=0;i<arOfni.Length;i++)
+                res[i]=arOfni[i]/n;
+            return res;
+        }
+        
+        static double GetDelta(double[] ar)
+        {
+            double t;
+            int v=ar.Length-1;
+            if(v<=5)
+                t=2.02;
+            else if(v<=10)
+                t=1.81;
+            else if(v<=15)
+                t=1.75;
+            else if(v<=20)
+                t=1.73;
+            else if(v<=25)
+                t=1.71;
+            else if(v<=30)
+                t=1.70;
+            else if(v<=36)
+                t=1.69;
+            else if(v<=40)
+                t=1.68;
+            else if(v<=50)
+                t=1.67;
+            else if(v<=70)
+                t=1.66;
+            else if(v<=100)
+                t=1.65;
+            else
+                t=1.64;
+            return t*GetGeomAvg(ar,0,ar.Length-1)/Math.Sqrt(ar.Length<=30?ar.Length:ar.Length-1);            
+        }
+
+        static double[] GetAccumFreq(double[] ni)
+        {
+            int n=ni.Length;
+            double[] res=new double[n];
+            res[0]=ni[0];
+            for(int i=1;i<n;i++)
+            {
+                res[i]=res[i-1]+ni[i];
+            }
+            return res;
+        }
+
+        static double[] GetMarkOfDifFunc(double[] mi, double deltX)
+        {
+            double[] res=new double[mi.Length];
+            for(int i=0;i<mi.Length;i++)
+                res[i]=mi[i]/deltX;
+            return res;
+        }
         static void Main(string[] args)
         {
             //File.Create(pathToTheOutput);
@@ -257,6 +316,25 @@ namespace COED_2
             double[] arOfni=GetArOfni(arOfCi,ar.Length);
             output.Write(print(arOfni));
 
+            output.Write("\n\n\nЧастости интервалов:\n");
+            double[] arOfmi=GetArOfmi(arOfni,ar.Length);
+            output.Write(print(arOfmi));
+
+            output.Write("\n\n\nПредельная абсолютная ошибка дельта\\*треугольник*\\=");
+            double delta=GetDelta(ar);
+            output.Write(delta.ToString());
+
+            output.Write("\n\n\nНакопленная частота:");
+            double[] AccumFreq=GetAccumFreq(arOfni);
+            output.Write(print(AccumFreq));
+
+            output.Write("\n\n\n Интегральная оценка:\n");
+            double[] markOfIntFunc=GetAccumFreq(arOfmi);
+            output.Write(print(markOfIntFunc));
+            
+            output.Write("\n\n\nДифференциальная оценка:\n");
+            double[] markOfDifFunc=GetMarkOfDifFunc(arOfmi, deltaX);
+            output.Write(print(markOfDifFunc));
             }
         }
     }
