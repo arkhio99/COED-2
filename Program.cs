@@ -225,17 +225,38 @@ namespace COED_2
             return res;
         }
 
-        static double[] GetChoseAvg(List<double[]> list)
+        static double GetChoseAvg(double[] middles, double[] mi)
         {
-            double[] res=new double[list.Count];
-            int i=0;
-            foreach(var val in list)
+            double res=0;
+            for(int i=0;i<middles.Length;i++)
             {
-                res[i]=GetLinAvg(val);
-                i++;
+                res+=middles[i]*mi[i];
             }
             return res;
         } 
+
+        static double[] GetMiddleOfInterval(List<double[]> list)
+        {
+            double[] res=new double[list.Count];
+            int i=0;
+            foreach(double[] val in list)
+            {
+                res[i]=(val[0]+val[val.Length-1])/2;
+                i++;
+            }
+            return res;
+        }
+
+        static double GetDisp(int n, double[] middles,double avg,double[] ni)
+        {
+            double res=0;
+            for(int i=0;i<middles.Length;i++)
+            {
+                res+=(middles[i]-avg)*(middles[i]-avg)*ni[i];
+            }
+            res/=(n<=30?n-1:n);
+            return res;
+        }
 
         static void Main(string[] args)
         {
@@ -349,10 +370,39 @@ namespace COED_2
             double[] markOfDifFunc=GetMarkOfDifFunc(arOfmi, deltaX);
             output.Write(print(markOfDifFunc));
 
-            output.Write("\n\n\nВыборочное среднее: \n");
-            double[] chosenAvg=GetChoseAvg(listOfIntervals);
-            output.Write(print(chosenAvg));
+            output.Write("\n\n\nСередины интервалов:\n");
+            double[] middlesOfInts=GetMiddleOfInterval(listOfIntervals);
+            output.Write(print(middlesOfInts));
 
+            output.Write("\n\n\nВыборочное среднее: \n");
+            double chosenAvg=GetChoseAvg(middlesOfInts,arOfmi);
+            output.Write(chosenAvg.ToString());
+
+            output.Write("\n\n\nВыборочная дисперсия=");
+            double disp=GetDisp(ar.Length,middlesOfInts,chosenAvg,arOfni);
+            output.Write(disp.ToString());
+
+            output.Write("\n\n\nВыборочное среднее квадратическое отклонение=");
+            double chosenSqrAvg=Math.Sqrt(disp);
+            output.Write(chosenSqrAvg.ToString());
+
+            output.Write($"\n\n\nИнтегральная оценка для математического ожидания: \n<х с чертой сверху> - <треугольник> < M(x) < <х с чертой сверху> + <треугольник> \n ");
+            double minMarkOfMatOj=GetLinAvg(ar)-delta;
+            double maxMarkOfMatOj=GetLinAvg(ar)+delta;
+            output.Write($"{minMarkOfMatOj}<M(x)<{maxMarkOfMatOj}");
+
+
+            output.Write("\n\n\nОтносительная точность мат.ожидания=");
+            double myu=delta/chosenAvg;
+            output.Write(myu.ToString());
+            
+            output.Write("\n\n\nРазмах вариации=");
+            double razmah=ar[ar.Length-1]-ar[0];
+            output.Write(razmah.ToString());
+
+            output.Write("\n\n\nКоэфициент вариации=");
+            double coeff=chosenSqrAvg/chosenAvg;
+            output.Write(coeff.ToString());
 
             }
         }
