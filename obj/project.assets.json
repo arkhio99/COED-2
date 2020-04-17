@@ -8,19 +8,23 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\vladb\\.nuget\\packages\\": {}
+    "C:\\Users\\PussyDominator\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Git\\COED-2\\COED-2.csproj",
+      "projectUniqueName": "C:\\Users\\PussyDominator\\Documents\\GitHub\\COED-2\\COED-2.csproj",
       "projectName": "COED-2",
-      "projectPath": "F:\\Git\\COED-2\\COED-2.csproj",
-      "packagesPath": "C:\\Users\\vladb\\.nuget\\packages\\",
-      "outputPath": "F:\\Git\\COED-2\\obj\\",
+      "projectPath": "C:\\Users\\PussyDominator\\Documents\\GitHub\\COED-2\\COED-2.csproj",
+      "packagesPath": "C:\\Users\\PussyDominator\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\PussyDominator\\Documents\\GitHub\\COED-2\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\vladb\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\PussyDominator\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -56,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\3.1.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200-preview-015002\\RuntimeIdentifierGraph.json"
       }
     }
   }

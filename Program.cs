@@ -7,8 +7,8 @@ namespace COED_2
 {
     class Program
     {
-        static string pathToTheOutput=@"F:\Git\COED-2\out.txt";
-        static string pathToTheInput = @"F:\Git\COED-2\values.txt";
+        static string pathToTheOutput=@"C:\Users\PussyDominator\Documents\GitHub\COED-2\out.txt";
+        static string pathToTheInput = @"C:\Users\PussyDominator\Documents\GitHub\COED-2\values.txt";
         static double[] ExcelToAr()
         {
             
@@ -154,14 +154,14 @@ namespace COED_2
             }
             return res;
         }
-        static double[] GetArOfni(int[] arOfCi,int n)
+        static double[] GetArOfni(List<double[]> l)
         {
-            var res=new double[arOfCi.Length];
-            var intervals=new double[arOfCi[0]+1];
-            res[0]=((double)arOfCi[0]+1)/n;
-            for(int i=1;i<arOfCi.Length;i++)
+            var res=new double[l.Count];
+            int i=0;
+            foreach(var val in l)
             {
-                res[i]=((double)(arOfCi[i]-arOfCi[i-1]))/n;
+                res[i]=val.Length;
+                i++;
             }
             return res;
         }
@@ -224,6 +224,19 @@ namespace COED_2
                 res[i]=mi[i]/deltX;
             return res;
         }
+
+        static double[] GetChoseAvg(List<double[]> list)
+        {
+            double[] res=new double[list.Count];
+            int i=0;
+            foreach(var val in list)
+            {
+                res[i]=GetLinAvg(val);
+                i++;
+            }
+            return res;
+        } 
+
         static void Main(string[] args)
         {
             //File.Create(pathToTheOutput);
@@ -313,7 +326,7 @@ namespace COED_2
             }            
 
             output.Write("\n\n\nЧастоты интервалов:\n");
-            double[] arOfni=GetArOfni(arOfCi,ar.Length);
+            double[] arOfni=GetArOfni(listOfIntervals);
             output.Write(print(arOfni));
 
             output.Write("\n\n\nЧастости интервалов:\n");
@@ -335,6 +348,12 @@ namespace COED_2
             output.Write("\n\n\nДифференциальная оценка:\n");
             double[] markOfDifFunc=GetMarkOfDifFunc(arOfmi, deltaX);
             output.Write(print(markOfDifFunc));
+
+            output.Write("\n\n\nВыборочное среднее: \n");
+            double[] chosenAvg=GetChoseAvg(listOfIntervals);
+            output.Write(print(chosenAvg));
+
+
             }
         }
     }
