@@ -1,11 +1,56 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "dislnc/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp2.0/dislnc.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/dislnc.dll": {}
+        }
+      },
+      "disnet/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp2.0/disnet.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/disnet.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "dislnc/1.0.0": {
+      "sha512": "YsVb4SEyUSAaA3I6e5yMOhIo+ArKbG7e36cCN0YP6NFQ7KX0Xpraw+//JzucmLG+/e/OoPM7B1RbhdT5zziQQQ==",
+      "type": "package",
+      "path": "dislnc/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        "dislnc.1.0.0.nupkg.sha512",
+        "dislnc.nuspec",
+        "lib/netcoreapp2.0/dislnc.dll"
+      ]
+    },
+    "disnet/1.0.0": {
+      "sha512": "tz2MK9jKS9/7RCfF0OHiq2HFl5shH9lC+mnO2hPsdtUFKuBofIuh+oAh2ixavRMQIhNjCP8mWx03CJsUrt9SSQ==",
+      "type": "package",
+      "path": "disnet/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        "disnet.1.0.0.nupkg.sha512",
+        "disnet.nuspec",
+        "lib/netcoreapp2.0/disnet.dll"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "dislnc >= 1.0.0",
+      "disnet >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\PussyDominator\\.nuget\\packages\\": {},
@@ -24,12 +69,14 @@
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
+        "C:\\Users\\PussyDominator\\Documents\\GitHub\\COED-2\\NuGet.Config",
         "C:\\Users\\PussyDominator\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Users\\PussyDominator\\Documents\\GitHub\\COED-2\\References": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -45,6 +92,16 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "dependencies": {
+          "dislnc": {
+            "target": "Package",
+            "version": "[1.0.0, )"
+          },
+          "disnet": {
+            "target": "Package",
+            "version": "[1.0.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

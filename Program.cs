@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 namespace COED_2
@@ -217,11 +216,11 @@ namespace COED_2
             return res;
         }
 
-        static double[] GetMarkOfDifFunc(double[] mi, double deltX)
+        static float[] GetMarkOfDifFunc(double[] mi, double deltX)
         {
-            double[] res=new double[mi.Length];
+            float[] res=new float[mi.Length];
             for(int i=0;i<mi.Length;i++)
-                res[i]=mi[i]/deltX;
+                res[i]=(float)(mi[i]/deltX);
             return res;
         }
 
@@ -296,12 +295,14 @@ namespace COED_2
             double xMinShtrih=ar[0]-0.15*deltaX;
             output.Write("xMinShtrih="+xMinShtrih.ToString()+"\n");
 
-            double k=Math.Floor((xMaxShtrih-xMinShtrih)/deltaX);
+            double k=Math.Round((xMaxShtrih-xMinShtrih)/deltaX);
             output.Write("Число интервалов="+k.ToString()+"\n");
 
             int lOfLastInterval;
             int l=0;
             var listOfCi=new List<int>();
+            //var listOfIntervals=new List<double[]>();
+            
             while(true)
             {          
                 lOfLastInterval=l;      
@@ -320,6 +321,26 @@ namespace COED_2
                 listOfCi.Add(r);
                 l=r;
             }
+            /*
+            bool exit=false;
+            while(true)
+            {   System.Console.WriteLine(lOfLastInterval);
+                var d=new List<double>();
+                for(int i=0;i<ar.Length/(int)k;i++)
+                {
+                    d.Add(ar[lOfLastInterval+i]);
+                    if(lOfLastInterval+i>=ar.Length-1)
+                    {
+                        exit=true;
+                        break;
+                    }
+                }
+                listOfIntervals.Add(d.ToArray());
+                if(exit)
+                    break;
+                lOfLastInterval+=ar.Length/(int)k;
+                
+            }*/
             if(xMaxShtrih-ar[lOfLastInterval]>deltaX)
             {
                 output.Write("xMaxShtrih не входит в последний интервал. Приравняем его к границе\n");
@@ -367,7 +388,7 @@ namespace COED_2
             output.Write(print(markOfIntFunc));
             
             output.Write("\n\n\nДифференциальная оценка:\n");
-            double[] markOfDifFunc=GetMarkOfDifFunc(arOfmi, deltaX);
+            float[] markOfDifFunc=GetMarkOfDifFunc(arOfmi, deltaX);
             output.Write(print(markOfDifFunc));
 
             output.Write("\n\n\nСередины интервалов:\n");
@@ -404,6 +425,35 @@ namespace COED_2
             double coeff=chosenSqrAvg/chosenAvg;
             output.Write(coeff.ToString());
 
+            /*dislin.scrmod ("revers");
+            dislin.setpag("da4p");
+            dislin.metafl("cons");
+            dislin.disini();
+            dislin.pagera();
+            dislin.complx ();
+            dislin.ticks (1, "x");
+            dislin.axslen (1600, 700);
+            dislin.name("Численность","x");
+            dislin.name("f(x)","y");
+            dislin.shdpat(1);
+            dislin.axspos(300,800);
+            dislin.graf(0.0f, (float)ar[ar.Length-1], 0.0f, (float)ar[ar.Length-1]/(float)k, 0.0f, 0.001f, 0.0001f, 0.0001f);
+            dislin.labels ("second", "bars");
+            dislin.labpos ("outside", "bars");
+            dislin.color  ("red");
+            float[] y=new float[listOfCi.Count];
+            for(int i=0;i<y.Length;i++)
+            {
+                y[i]=0;
+            }
+            float[] arOfCiFloat=new float[listOfCi.Count];
+            for(int i=0;i<listOfCi.Count;i++)
+                arOfCiFloat[i]=(float)arOfCi[i];
+            dislin.bars   (arOfCiFloat, y, markOfDifFunc.ToArray(), arOfCiFloat.Length);
+            dislin.color  ("fore");
+            dislin.endgrf();
+            System.Console.ReadLine();
+            */
             }
         }
     }

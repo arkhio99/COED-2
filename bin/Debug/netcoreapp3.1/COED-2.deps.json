@@ -7,8 +7,27 @@
   "targets": {
     ".NETCoreApp,Version=v3.1": {
       "COED-2/1.0.0": {
+        "dependencies": {
+          "dislnc": "1.0.0",
+          "disnet": "1.0.0"
+        },
         "runtime": {
           "COED-2.dll": {}
+        }
+      },
+      "dislnc/1.0.0": {
+        "runtime": {
+          "lib/netcoreapp2.0/dislnc.dll": {
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "disnet/1.0.0": {
+        "runtime": {
+          "lib/netcoreapp2.0/disnet.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
         }
       }
     }
@@ -18,6 +37,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "dislnc/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YsVb4SEyUSAaA3I6e5yMOhIo+ArKbG7e36cCN0YP6NFQ7KX0Xpraw+//JzucmLG+/e/OoPM7B1RbhdT5zziQQQ==",
+      "path": "dislnc/1.0.0",
+      "hashPath": "dislnc.1.0.0.nupkg.sha512"
+    },
+    "disnet/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tz2MK9jKS9/7RCfF0OHiq2HFl5shH9lC+mnO2hPsdtUFKuBofIuh+oAh2ixavRMQIhNjCP8mWx03CJsUrt9SSQ==",
+      "path": "disnet/1.0.0",
+      "hashPath": "disnet.1.0.0.nupkg.sha512"
     }
   }
 }
