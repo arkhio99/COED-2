@@ -173,7 +173,7 @@ namespace COED_2
             return res;
         }
         
-        static double GetDelta(double[] ar)
+        static double GetDelta(double[] ar,double chosenSqrAvg)
         {
             double t;
             int v=ar.Length-1;
@@ -201,7 +201,7 @@ namespace COED_2
                 t=1.65;
             else
                 t=1.64;
-            return t*GetGeomAvg(ar,0,ar.Length-1)/Math.Sqrt(ar.Length<=30?ar.Length:ar.Length-1);            
+            return t*chosenSqrAvg/Math.Sqrt(ar.Length<=30?ar.Length:ar.Length-1);            
         }
 
         static double[] GetAccumFreq(double[] ni)
@@ -257,6 +257,25 @@ namespace COED_2
             return res;
         }
 
+        static List<double[]> GetListOfIntervals(double[] ar, double[] rights)
+        {
+            var list=new List<double[]>();
+            int j=0;
+            for(int i=0;i<rights.Length;i++)
+            {
+                List<double> temp=new List<double>();
+                while(ar[j]<rights[i])
+                {
+                    temp.Add(ar[j]);
+                    if(j==ar.Length-1)
+                        break;
+                    j++;
+                }
+                list.Add(temp.ToArray());
+            }
+            return list;
+        }
+
         static void Main(string[] args)
         {
             //File.Create(pathToTheOutput);
@@ -300,10 +319,17 @@ namespace COED_2
 
             int lOfLastInterval;
             int l=0;
-            var listOfCi=new List<int>();
+            var listOfCi=new List<double>();
             //var listOfIntervals=new List<double[]>();
+            double temp=ar[0];
+            while(temp<ar[ar.Length-1])
+            {
+                temp+=deltaX;
+                listOfCi.Add(temp);
+
+            }
             
-            while(true)
+            /*while(true)
             {          
                 lOfLastInterval=l;      
                 int r=l;
@@ -318,9 +344,10 @@ namespace COED_2
                         listOfCi.Add(r);
                         break;
                     }
+                r--;
                 listOfCi.Add(r);
-                l=r;
-            }
+                l=r+1;
+            }*/
             /*
             bool exit=false;
             while(true)
@@ -341,31 +368,32 @@ namespace COED_2
                 lOfLastInterval+=ar.Length/(int)k;
                 
             }*/
-            if(xMaxShtrih-ar[lOfLastInterval]>deltaX)
+            /*if(xMaxShtrih-ar[lOfLastInterval]>deltaX)
             {
                 output.Write("xMaxShtrih не входит в последний интервал. Приравняем его к границе\n");
                 xMaxShtrih=ar[lOfLastInterval];
                 output.Write("xMaxShtrih="+xMaxShtrih.ToString()+"\n");
                 k=Math.Round((xMaxShtrih-xMinShtrih)/deltaX);
                 output.Write("Число интервалов="+k.ToString()+"\n\n\n");
-            }
+            }*/
 
             output.Write("Правые границы интервалов:\n");
-            int[] arOfCi=listOfCi.ToArray();
+            double[] arOfCi=listOfCi.ToArray();
             output.Write(print(arOfCi));
 
             output.Write("\n\n\nИнтервалы:\n");
-            var listOfIntervals=new List<double[]>();
-            listOfIntervals.Add(GetSubArray<double>(ar,0,arOfCi[0]+1));
+            var listOfIntervals=GetListOfIntervals(ar,arOfCi);
+            /*listOfIntervals.Add(GetSubArray<double>(ar,0,arOfCi[0]+1));
             for(int i=1;i<arOfCi.Length;i++)
             {
                 listOfIntervals.Add(GetSubArray<double>(ar,arOfCi[i-1]+1,arOfCi[i]-arOfCi[i-1]));
-            }
+            }*/
             var arOfIntervals=listOfIntervals.ToArray();
             for(int i=0;i<arOfIntervals.Length;i++)
             {
                 output.Write(i.ToString()+".\n"+print(arOfIntervals[i]));
-            }            
+            }     
+
 
             output.Write("\n\n\nЧастоты интервалов:\n");
             double[] arOfni=GetArOfni(listOfIntervals);
@@ -375,9 +403,7 @@ namespace COED_2
             double[] arOfmi=GetArOfmi(arOfni,ar.Length);
             output.Write(print(arOfmi));
 
-            output.Write("\n\n\nПредельная абсолютная ошибка дельта\\*треугольник*\\=");
-            double delta=GetDelta(ar);
-            output.Write(delta.ToString());
+            
 
             output.Write("\n\n\nНакопленная частота:");
             double[] AccumFreq=GetAccumFreq(arOfni);
@@ -407,6 +433,10 @@ namespace COED_2
             double chosenSqrAvg=Math.Sqrt(disp);
             output.Write(chosenSqrAvg.ToString());
 
+            output.Write("\n\n\nПредельная абсолютная ошибка дельта\\*треугольник*\\=");
+            double delta=GetDelta(ar,chosenSqrAvg);
+            output.Write(delta.ToString());
+
             output.Write($"\n\n\nИнтегральная оценка для математического ожидания: \n<х с чертой сверху> - <треугольник> < M(x) < <х с чертой сверху> + <треугольник> \n ");
             double minMarkOfMatOj=GetLinAvg(ar)-delta;
             double maxMarkOfMatOj=GetLinAvg(ar)+delta;
@@ -425,7 +455,7 @@ namespace COED_2
             double coeff=chosenSqrAvg/chosenAvg;
             output.Write(coeff.ToString());
 
-            /*dislin.scrmod ("revers");
+            dislin.scrmod ("revers");
             dislin.setpag("da4p");
             dislin.metafl("cons");
             dislin.disini();
@@ -453,7 +483,7 @@ namespace COED_2
             dislin.color  ("fore");
             dislin.endgrf();
             System.Console.ReadLine();
-            */
+            
             }
         }
     }
