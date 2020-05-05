@@ -10,13 +10,12 @@ namespace COED_2
         static string pathToTheInput = @"C:\Users\PussyDominator\Documents\GitHub\COED-2\values.txt";
         static double[] ExcelToAr()
         {
-            
             string[] strings = File.ReadAllLines(pathToTheInput);
             double[] ar = new double[strings.Length];
             for(int i=0;i<strings.Length;i++)
             {
                 string[] temp = strings[i].Split('\t');
-                ar[i]=Convert.ToDouble(temp[0]);
+                ar[i]=Convert.ToDouble(temp[3]);
             }
             return ar;
         }
@@ -302,20 +301,19 @@ namespace COED_2
             output.Write($"Длина массива={ar.Length}\n\n\n");
 
 
-            output.Write("Приближённая ширина интервала=");
+            output.Write("1. Приближённая ширина интервала=");
             double deltaX=GetDeltaX(ar[0],ar[ar.Length-1],ar.Length);
             output.Write(deltaX.ToString());
             output.Write("\n\n\n");
 
+            double xMinShtrih=ar[0]-0.15*deltaX;
+            output.Write("2. xMinShtrih="+xMinShtrih.ToString()+"\n");
 
             double xMaxShtrih=ar[ar.Length-1]+0.15*deltaX;
-            output.Write("xMaxShtrih="+xMaxShtrih.ToString()+"\n");
-
-            double xMinShtrih=ar[0]-0.15*deltaX;
-            output.Write("xMinShtrih="+xMinShtrih.ToString()+"\n");
+            output.Write("3. xMaxShtrih="+xMaxShtrih.ToString()+"\n");
 
             double k=Math.Round((xMaxShtrih-xMinShtrih)/deltaX);
-            output.Write("Число интервалов="+k.ToString()+"\n");
+            output.Write("4. Число интервалов="+k.ToString()+"\n");
 
             int lOfLastInterval;
             int l=0;
@@ -391,10 +389,13 @@ namespace COED_2
             var arOfIntervals=listOfIntervals.ToArray();
             for(int i=0;i<arOfIntervals.Length;i++)
             {
-                output.Write(i.ToString()+".\n"+print(arOfIntervals[i]));
+                output.Write(i.ToString()+")\n"+print(arOfIntervals[i]));
             }     
 
-
+            output.WriteLine("\n\n\nГраницы интервалов:");
+            output.WriteLine("0) ["+ar[0]+"],["+arOfCi[0]+"]");
+            for(int i=1;i<k;i++)
+                output.WriteLine(i+") ["+arOfCi[i-1]+"],["+arOfCi[i]+"]");
             output.Write("\n\n\nЧастоты интервалов:\n");
             double[] arOfni=GetArOfni(listOfIntervals);
             output.Write(print(arOfni));
@@ -421,11 +422,11 @@ namespace COED_2
             double[] middlesOfInts=GetMiddleOfInterval(listOfIntervals);
             output.Write(print(middlesOfInts));
 
-            output.Write("\n\n\nВыборочное среднее: \n");
+            output.Write("\n\n\n5. Выборочное среднее: \n");
             double chosenAvg=GetChoseAvg(middlesOfInts,arOfmi);
             output.Write(chosenAvg.ToString());
 
-            output.Write("\n\n\nВыборочная дисперсия=");
+            output.Write("\n\n\n6. Выборочная дисперсия=");
             double disp=GetDisp(ar.Length,middlesOfInts,chosenAvg,arOfni);
             output.Write(disp.ToString());
 
@@ -433,29 +434,29 @@ namespace COED_2
             double chosenSqrAvg=Math.Sqrt(disp);
             output.Write(chosenSqrAvg.ToString());
 
-            output.Write("\n\n\nПредельная абсолютная ошибка дельта\\*треугольник*\\=");
+            output.Write("\n\n\n7. Предельная абсолютная ошибка дельта\\*треугольник*\\=");
             double delta=GetDelta(ar,chosenSqrAvg);
             output.Write(delta.ToString());
 
-            output.Write($"\n\n\nИнтегральная оценка для математического ожидания: \n<х с чертой сверху> - <треугольник> < M(x) < <х с чертой сверху> + <треугольник> \n ");
+            output.Write($"\n\n\n8. Интегральная оценка для математического ожидания: \n<х с чертой сверху> - <треугольник> < M(x) < <х с чертой сверху> + <треугольник> \n ");
             double minMarkOfMatOj=GetLinAvg(ar)-delta;
             double maxMarkOfMatOj=GetLinAvg(ar)+delta;
             output.Write($"{minMarkOfMatOj}<M(x)<{maxMarkOfMatOj}");
 
 
-            output.Write("\n\n\nОтносительная точность мат.ожидания=");
+            output.Write("\n\n\n9. Относительная точность мат.ожидания=");
             double myu=delta/chosenAvg;
             output.Write(myu.ToString());
             
-            output.Write("\n\n\nРазмах вариации=");
+            output.Write("\n\n\n10. Размах вариации=");
             double razmah=ar[ar.Length-1]-ar[0];
             output.Write(razmah.ToString());
 
-            output.Write("\n\n\nКоэфициент вариации=");
+            output.Write("\n\n\n11. Коэфициент вариации=");
             double coeff=chosenSqrAvg/chosenAvg;
             output.Write(coeff.ToString());
 
-            dislin.scrmod ("revers");
+            /*dislin.scrmod ("revers");
             dislin.setpag("da4p");
             dislin.metafl("cons");
             dislin.disini();
@@ -482,7 +483,7 @@ namespace COED_2
             dislin.bars   (arOfCiFloat, y, markOfDifFunc.ToArray(), arOfCiFloat.Length);
             dislin.color  ("fore");
             dislin.endgrf();
-            System.Console.ReadLine();
+            System.Console.ReadLine();*/
             
             }
         }
