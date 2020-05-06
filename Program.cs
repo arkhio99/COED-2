@@ -7,15 +7,15 @@ namespace COED_2
     class Program
     {
         static string pathToTheOutput=@"C:\Users\PussyDominator\Documents\GitHub\COED-2\out.txt";
-        static string pathToTheInput = @"C:\Users\PussyDominator\Documents\GitHub\COED-2\values.txt";
+        static string pathToTheInput = @"C:\Users\PussyDominator\Documents\GitHub\COED-2\Vlad_H.csv";
         static double[] ExcelToAr()
         {
             string[] strings = File.ReadAllLines(pathToTheInput);
             double[] ar = new double[strings.Length];
             for(int i=0;i<strings.Length;i++)
             {
-                string[] temp = strings[i].Split('\t');
-                ar[i]=Convert.ToDouble(temp[3]);
+                string[] temp = strings[i].Split('\t',';');
+                ar[i]=Convert.ToDouble(temp[2]);
             }
             return ar;
         }
@@ -140,7 +140,7 @@ namespace COED_2
         }
         static double GetDeltaX(double xMin, double xMax, double len)
         {
-            return Math.Round((xMax-xMin)/(1+3.31*Math.Log10(len)));
+            return(xMax-xMin)/(1+3.31*Math.Log10(len));
         }
 
         static T[] GetSubArray<T>(T[] ar, int left, int n)
@@ -305,7 +305,7 @@ namespace COED_2
             double deltaX=GetDeltaX(ar[0],ar[ar.Length-1],ar.Length);
             output.Write(deltaX.ToString());
             output.Write("\n\n\n");
-
+            deltaX=Math.Round(deltaX);
             double xMinShtrih=ar[0]-0.15*deltaX;
             output.Write("2. xMinShtrih="+xMinShtrih.ToString()+"\n");
 
@@ -315,8 +315,8 @@ namespace COED_2
             double k=Math.Round((xMaxShtrih-xMinShtrih)/deltaX);
             output.Write("4. Число интервалов="+k.ToString()+"\n");
 
-            int lOfLastInterval;
-            int l=0;
+            //int lOfLastInterval;
+            //int l=0;
             var listOfCi=new List<double>();
             //var listOfIntervals=new List<double[]>();
             double temp=ar[0];
@@ -393,9 +393,9 @@ namespace COED_2
             }     
 
             output.WriteLine("\n\n\nГраницы интервалов:");
-            output.WriteLine("0) ["+ar[0]+"],["+arOfCi[0]+"]");
+            output.WriteLine("0) ["+ar[0]+","+arOfCi[0]+"]");
             for(int i=1;i<k;i++)
-                output.WriteLine(i+") ["+arOfCi[i-1]+"],["+arOfCi[i]+"]");
+                output.WriteLine(i+") ["+arOfCi[i-1]+","+arOfCi[i]+"]");
             output.Write("\n\n\nЧастоты интервалов:\n");
             double[] arOfni=GetArOfni(listOfIntervals);
             output.Write(print(arOfni));
@@ -439,8 +439,8 @@ namespace COED_2
             output.Write(delta.ToString());
 
             output.Write($"\n\n\n8. Интегральная оценка для математического ожидания: \n<х с чертой сверху> - <треугольник> < M(x) < <х с чертой сверху> + <треугольник> \n ");
-            double minMarkOfMatOj=GetLinAvg(ar)-delta;
-            double maxMarkOfMatOj=GetLinAvg(ar)+delta;
+            double minMarkOfMatOj=chosenAvg-delta;
+            double maxMarkOfMatOj=chosenAvg+delta;
             output.Write($"{minMarkOfMatOj}<M(x)<{maxMarkOfMatOj}");
 
 

@@ -7,12 +7,12 @@ namespace проект
     {
         static double[,] ExcelToAr()
         {
-            string path = @"F:\Git\COED-2\values.txt";
+            string path = @"C:\Users\PussyDominator\Documents\GitHub\COED-2\Vlad_H.csv";
             string[] strings = File.ReadAllLines(path);
             double[,] ar = new double[strings.Length,10];
             for(int i=0;i<strings.Length;i++)
             {
-                string[] temp = strings[i].Split('\t');
+                string[] temp = strings[i].Split('\t',';');
                 for (int j = 0; j < 10; j++)
                     ar[i, j] = double.Parse(temp[j]);
             }
@@ -149,6 +149,12 @@ namespace проект
             //1а средние по столбцам и оценки дисперсий
             double[] arAvgs=GetRowOfAvg(data);
             double[] arS2 = GetArOfDisp(data,arAvgs);
+            int indOfMax=0;
+            for(int i=0;i<arS2.Length;i++)
+                if(arS2[i]>arS2[indOfMax])
+                    indOfMax=i;
+            System.Console.WriteLine(indOfMax);
+            
             //1б стандартизованная матрица
             double[,] X=GetStandMatrix(data,arAvgs,arS2);
             //1в ковариационная матрица
