@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "OIhUorbZaSzvWZBNWy6r8LB1zeuE8xZz4x2NnA1C+MP14YCq6KtQsLtS/rswU3XLTBSqclL25eFPwV4HBsbYuQ==",
+  "dgSpecHash": "ZeE4tuP+c/+ikZBbbOl8Apw9jWOpiD9+Q75krrGedAy7ja4NkqsLhSPugQKOlcCK0FtYCu5hD0RbvE0hAmJxAA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PussyDominator\\Documents\\GitHub\\COED-2\\COED-2.csproj",
+  "projectFilePath": "F:\\Git\\COED-2\\COED-2.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\PussyDominator\\.nuget\\packages\\dislnc\\1.0.0\\dislnc.1.0.0.nupkg.sha512",
-    "C:\\Users\\PussyDominator\\.nuget\\packages\\disnet\\1.0.0\\disnet.1.0.0.nupkg.sha512"
+    "C:\\Users\\vladb\\.nuget\\packages\\dislnc\\1.0.0\\dislnc.1.0.0.nupkg.sha512",
+    "C:\\Users\\vladb\\.nuget\\packages\\disnet\\1.0.0\\disnet.1.0.0.nupkg.sha512"
   ],
   "logs": []
 }

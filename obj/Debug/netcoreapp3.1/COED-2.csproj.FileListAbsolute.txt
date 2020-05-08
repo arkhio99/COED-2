@@ -25,3 +25,8 @@ C:\Users\PussyDominator\Documents\GitHub\COED-2\obj\Debug\netcoreapp3.1\COED-2.g
 C:\Users\PussyDominator\Documents\GitHub\COED-2\bin\Debug\netcoreapp3.1\dislnc.dll
 C:\Users\PussyDominator\Documents\GitHub\COED-2\bin\Debug\netcoreapp3.1\disnet.dll
 C:\Users\PussyDominator\Documents\GitHub\COED-2\obj\Debug\netcoreapp3.1\COED-2.csproj.CopyComplete
+F:\Git\COED-2\bin\Debug\netcoreapp3.1\dislnc.dll
+F:\Git\COED-2\bin\Debug\netcoreapp3.1\disnet.dll
+F:\Git\COED-2\obj\Debug\netcoreapp3.1\COED-2.csproj.CoreCompileInputs.cache
+F:\Git\COED-2\obj\Debug\netcoreapp3.1\COED-2.csproj.CopyComplete
+F:\Git\COED-2\obj\Debug\netcoreapp3.1\COED-2.genruntimeconfig.cache

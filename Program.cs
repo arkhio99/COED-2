@@ -6,8 +6,8 @@ namespace COED_2
 {
     class Program
     {
-        static string pathToTheOutput=@"C:\Users\PussyDominator\Documents\GitHub\COED-2\out.txt";
-        static string pathToTheInput = @"C:\Users\PussyDominator\Documents\GitHub\COED-2\Vlad_H.csv";
+        static string pathToTheOutput=@"F:\Git\COED-2\out.txt";
+        static string pathToTheInput = @"F:\Git\COED-2\values.csv";
         static double[] ExcelToAr()
         {
             string[] strings = File.ReadAllLines(pathToTheInput);
@@ -15,7 +15,7 @@ namespace COED_2
             for(int i=0;i<strings.Length;i++)
             {
                 string[] temp = strings[i].Split('\t',';');
-                ar[i]=Convert.ToDouble(temp[2]);
+                ar[i]=Convert.ToDouble(temp[0]);
             }
             return ar;
         }
@@ -319,14 +319,30 @@ namespace COED_2
             //int l=0;
             var listOfCi=new List<double>();
             //var listOfIntervals=new List<double[]>();
+            bool flag=true;
+            int count=0;
+            while(flag)
+            {
+            listOfCi.Clear();    
             double temp=ar[0];
-            while(temp<ar[ar.Length-1])
+            for(int i=0;i<(int)k;i++)
             {
                 temp+=deltaX;
                 listOfCi.Add(temp);
-
             }
-            
+            if(ar[ar.Length-1]<listOfCi[listOfCi.Count()-1])
+            {
+                flag= false;
+            }
+            else{
+                if(count==0) 
+                    output.WriteLine($"Правая граница последнего интервала \nравна {listOfCi[listOfCi.Count()-1]}, что меньше xMax. Увеличим deltaX.");
+                deltaX+=0.1;
+            }
+            count++;
+            }
+            output.WriteLine("Новый deltaX="+deltaX.ToString());
+
             /*while(true)
             {          
                 lOfLastInterval=l;      
@@ -393,9 +409,9 @@ namespace COED_2
             }     
 
             output.WriteLine("\n\n\nГраницы интервалов:");
-            output.WriteLine("0) ["+ar[0]+","+arOfCi[0]+"]");
+            output.WriteLine("0) ["+$"{ar[0]:f1}"+";"+$"{arOfCi[0]:f1}"+"]");
             for(int i=1;i<k;i++)
-                output.WriteLine(i+") ["+arOfCi[i-1]+","+arOfCi[i]+"]");
+                output.WriteLine(i+") ["+$"{arOfCi[i-1]:f1}"+";"+$"{arOfCi[i]:f1}"+"]");
             output.Write("\n\n\nЧастоты интервалов:\n");
             double[] arOfni=GetArOfni(listOfIntervals);
             output.Write(print(arOfni));

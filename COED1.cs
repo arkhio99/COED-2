@@ -7,7 +7,7 @@ namespace проект
     {
         static double[,] ExcelToAr()
         {
-            string path = @"C:\Users\PussyDominator\Documents\GitHub\COED-2\Vlad_H.csv";
+            string path = @"F:\Git\COED-2\Rail_Sh.csv";
             string[] strings = File.ReadAllLines(path);
             double[,] ar = new double[strings.Length,10];
             for(int i=0;i<strings.Length;i++)
@@ -15,6 +15,7 @@ namespace проект
                 string[] temp = strings[i].Split('\t',';');
                 for (int j = 0; j < 10; j++)
                     ar[i, j] = double.Parse(temp[j]);
+                    System.Console.WriteLine(i);
             }
             return ar;
         }
