@@ -6,8 +6,8 @@ namespace COED_2
 {
     class Program
     {
-        static string pathToTheOutput=@"F:\Git\COED-2\out.txt";
-        static string pathToTheInput = @"F:\Git\COED-2\values.csv";
+        static string pathToTheOutput=@"C:\Users\vladb\Documents\GitHub\COED-2\out.txt";
+        static string pathToTheInput = @"C:\Users\vladb\Documents\GitHub\COED-2\kirill_Y.csv";
         static double[] ExcelToAr()
         {
             string[] strings = File.ReadAllLines(pathToTheInput);
@@ -15,7 +15,7 @@ namespace COED_2
             for(int i=0;i<strings.Length;i++)
             {
                 string[] temp = strings[i].Split('\t',';');
-                ar[i]=Convert.ToDouble(temp[0]);
+                ar[i]=Convert.ToDouble(temp[1]);
             }
             return ar;
         }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZeE4tuP+c/+ikZBbbOl8Apw9jWOpiD9+Q75krrGedAy7ja4NkqsLhSPugQKOlcCK0FtYCu5hD0RbvE0hAmJxAA==",
+  "dgSpecHash": "jRLNPGDrjvh+whMRXlKKVQxYJ4WZKQnvW5Ej99MN8xebUgXOaX/xbniOiwUZjLbXswsJm8ZP+DKecrOrwhhFQw==",
   "success": true,
-  "projectFilePath": "F:\\Git\\COED-2\\COED-2.csproj",
+  "projectFilePath": "C:\\Users\\vladb\\Documents\\GitHub\\COED-2\\COED-2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vladb\\.nuget\\packages\\dislnc\\1.0.0\\dislnc.1.0.0.nupkg.sha512",
     "C:\\Users\\vladb\\.nuget\\packages\\disnet\\1.0.0\\disnet.1.0.0.nupkg.sha512"

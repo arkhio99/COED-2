@@ -7,7 +7,7 @@ namespace проект
     {
         static double[,] ExcelToAr()
         {
-            string path = @"F:\Git\COED-2\Rail_Sh.csv";
+            string path = @"C:\Users\vladb\Documents\GitHub\COED-2\kirill_Y.csv";
             string[] strings = File.ReadAllLines(path);
             double[,] ar = new double[strings.Length,10];
             for(int i=0;i<strings.Length;i++)
